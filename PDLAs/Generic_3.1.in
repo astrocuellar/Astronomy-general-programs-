@@ -1,0 +1,150 @@
+# Generic cloudy model (with J0019 numbers)
+#
+#
+# --------- THE INCIDENT RADIATION FIELD ----------
+# Quasar
+AGN T =1.5e5 k, a(ox) = -1.4, a(uv)=-0.5 a(x)=-1  # Shape: parameters from hazy1.pdf
+luminosity 45.8 range 1000 to 2000 ansgtrom       # Luminosity in log10(erg/s) integrated over [1000-2000] angstrom 
+radius 3.1 parsecs                             # Distance in log10(pc)                                               <<<<<
+# Backgrounds (metagalactic and CMB)
+cmb, z = 2.53                                     # CMB background (shape & intensity)
+table KS19 z=2.53                                 # Khaire & Srianand metagalactic (shape & intensity)
+# Testing by removing HI-ionising photons
+#extinguish column = 18.                                                                                               <<<<<
+#
+#
+# --------- CLOUD ---------------------------------
+# -- "Known" (fixed) parameters --
+abundances GASS                                   #GAS phases abundances (GASS=Solar)
+metals 0.1                                        #Scale to 0.1
+element Lithium off                               #Switch off some metals to save calculation time
+element Beryllium off
+element Boron off
+element Fluorine off
+element Phosphor off
+element Potassium off
+element Scandium off
+element Titanium off
+element Vanadium off
+element Chromium off
+element Manganese off
+element Cobalt off
+element Copper off
+#
+# -- Parameters to vary --
+constant density
+hden -1 vary                                       # log10(nH)
+grid range from -4 to 4 with 0.2 dex steps           # Grid change nH
+#
+# -- Stopping criteria --
+stop neutral hydrogen column density 18           #Set high for now.
+stop temperature 5 linear
+#
+#
+# --------- OUTPUT FILES ---------------------------
+save overview ALL ".ovr" last
+set save luminosity old                           #so that the continuum output is in received flux on illuminated surface instead of luminosity
+save continuum ".con"  units eV last
+save species labels ALL "labels.txt"
+save species column densities ".col"
+"H"
+"H+"
+"H2"
+"Si"
+"Si+"
+"Si+2"
+"Si+3"
+"Si+4"
+"Si+5"
+"Si+6"
+"Si+7"
+"Si+8"
+"Si+9"
+"Si+10"
+"Si+11"
+"Si+12"
+"Si+13"
+"Si+14"
+"C"
+"C+"
+"C+2"
+"C+3"
+"C+4"
+"C+5"
+"C+6"
+"N"
+"N+"
+"N+2"
+"N+3"
+"N+4"
+"N+5"
+"N+6"
+"N+7"
+"O"
+"O+"
+"O+2"
+"O+3"
+"O+4"
+"O+5"
+"O+6"
+"O+7"
+"O+8"
+end 
+Save species densities ".density"
+"H"
+"H+"
+"H2"
+"Si"
+"Si+"
+"Si+2"
+"Si+3"
+"Si+4"
+"Si+5"
+"Si+6"
+"Si+7"
+"Si+8"
+"Si+9"
+"Si+10"
+"Si+11"
+"Si+12"
+"Si+13"
+"Si+14"
+"C"
+"C+"
+"C+2"
+"C+3"
+"C+4"
+"C+5"
+"C+6"
+"N"
+"N+"
+"N+2"
+"N+3"
+"N+4"
+"N+5"
+"N+6"
+"N+7"
+"O"
+"O+"
+"O+2"
+"O+3"
+"O+4"
+"O+5"
+"O+6"
+"O+7"
+"O+8"
+end
+save species column density ".Si+2_col" "Si+2[:]" 
+save species densities ".Si+2_den" "Si+2[:]"
+save species column density ".Si+_col" "Si+[:]" 
+save species densities ".Si+_den" "Si+[:]"
+save species column density ".O_col" "O[:]" 
+save species densities ".O_den" "O[:]"
+save species column density ".O+_col" "O+[:]"
+save species densities ".O+_den" "O+[:]"
+save species column density ".C_col" "C[:]" 
+save species densities ".C_den" "C[:]"
+save species column density ".C+_col" "C+[:]" 
+save species densities ".C+_den" "C+[:]"
+save species column density ".C+2_col" "C+2[:]"
+save species densities ".C+2_den" "C+2[:]"
